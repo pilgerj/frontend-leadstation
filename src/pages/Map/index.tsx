@@ -1,14 +1,19 @@
 import React, {useEffect, useState, FormEvent, ChangeEvent, Fragment} from 'react';
 import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
-import {uuid} from 'uuidv4';
 
-import {Container, LeafletMapContainer, FormContainer, MarkedPointsContainer} from './styles';
+import api from '../../services/api';
+
+import DeleteIcon from '../../assets/trash.svg';
+import {Container, LeafletMapContainer, FormContainer, MarkedPointsContainer, MarkedPoint} from './styles';
  
 interface MarkedPoint {
-    key: string;
+    id: string;
     latitude: number;
     longitude: number;
-    descricao: string;
+    description: string;
+    created_at: Date;
+    updated_at: Date;
+
 };
 
 
@@ -20,26 +25,8 @@ const MapContainer: React.FC = () => {
     const [formData, setFormData] = useState({
         latitude: '',
         longitude: '',
-        descricao: '',
+        description: '',
     });
-
-  /*
-  latitude: -29.6493196, longitude: -50.7891248
-  latitude: -29.6460375, longitude: -50.7838463
-  */ 
-
-    const PopupMarker = ({latitude, longitude, descricao}: MarkedPoint) => (
-        <Marker position={[latitude, longitude]}>
-            <Popup>{descricao}</Popup>
-        </Marker>
-    );
-
-    const MarkersList = ({markers}: {markers: MarkedPoint[]}) => {
-        const marks = markers.map( ({key, ...props}) => (
-            <PopupMarker key={key} {...props} />
-        ));
-        return <Fragment>{marks}</Fragment>
-    };
 
     //Setar ponto inicial no mapa de acordo com sua geolocation.
     useEffect( () => {
@@ -50,6 +37,33 @@ const MapContainer: React.FC = () => {
         });        
     }, []);
 
+    useEffect( () => {
+        api.get('/markings').then(response => {
+            const data: Array<MarkedPoint> = response.data;
+            setMarkedPoints(data);
+        });
+    }, []);
+    
+ 
+
+  /*
+  latitude: -29.6493196, longitude: -50.7891248
+  latitude: -29.6460375, longitude: -50.7838463
+  */ 
+
+    const PopupMarker = ({latitude, longitude, description}: MarkedPoint) => (
+        <Marker position={[latitude, longitude]}>
+            <Popup>{description}</Popup>
+        </Marker>
+    );
+
+    const MarkersList = ({markers}: {markers: MarkedPoint[]}) => {
+        const marks = markers.map( ({...props}) => (
+            <PopupMarker key={props.id} {...props} />
+        ));
+        return <Fragment>{marks}</Fragment>
+    };
+    
     function handleInputChange(event: ChangeEvent<HTMLInputElement>){
         const {name, value} = event.target;
 
@@ -61,28 +75,18 @@ const MapContainer: React.FC = () => {
 
     async function handleSubmit(event: FormEvent){
         event.preventDefault();
-        const {latitude, longitude, descricao} = formData;
 
-        if (latitude !== '' && longitude !== '' && descricao !== '' ){
-            const parseLat = parseFloat(latitude);
-            const parseLng = parseFloat(longitude);
-            
-            if(markedPoints.findIndex( mp => mp.latitude === parseLat && mp.longitude === parseLng) === -1){
-                setMarkedPoints([
-                    ...markedPoints,
-                    {
-                        key: uuid(),
-                        latitude: parseLat,
-                        longitude: parseLng,
-                        descricao: descricao
-                    }
-                ]);
-            }
-        };
+        const {latitude, longitude, description} = formData;
+
+        await api.post('/markings', {latitude, longitude, description} ).then( response => {
+            setMarkedPoints([...markedPoints, response.data]);
+        });
     };
-        
-    
 
+    async function handleDeletePoint(){
+        
+    }
+        
     return (
         <Container>
             <h1>Marque seus Points</h1>
@@ -126,8 +130,8 @@ const MapContainer: React.FC = () => {
 
                 <input 
                   type='text'
-                  name='descricao'
-                  id='descricao'
+                  name='description'
+                  id='description'
                   placeholder='Descrição'
                   onChange={handleInputChange}
                 />
@@ -141,10 +145,21 @@ const MapContainer: React.FC = () => {
 
             <h1>Pontos Criados</h1>
             {markedPoints.map( point => (
-                <MarkedPointsContainer key={point.key}>
-                    <h2>{point.descricao}</h2>
-                    <h4>{point.latitude}</h4>
-                    <h4>{point.longitude}</h4>
+                <MarkedPointsContainer key={point.id}>
+                    <MarkedPoint>
+                        <div id='title'>
+                            <h2>{point.description}</h2>
+                        </div>
+
+                        <div id='latlng'>
+                            <h4> Latitude:  {point.latitude}</h4>
+                            <h4> Longitude: {point.longitude}</h4>
+                        </div>
+
+                        <button onClick={handleDeletePoint}>
+                            <img src={DeleteIcon}/>
+                        </button>
+                    </MarkedPoint>
                 </MarkedPointsContainer>
             ))}
             

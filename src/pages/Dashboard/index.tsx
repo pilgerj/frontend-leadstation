@@ -1,7 +1,6 @@
 import React from 'react';
 
 import MapContainer from '../Map';
-import MarksContainer from '../Marks';
 
 import {MainDiv} from './styles';
 
@@ -13,8 +12,6 @@ const Dashboard = () => {
             </header>
 
             <MapContainer/>
-            
-            <MarksContainer/>
         </MainDiv>
     )
 };

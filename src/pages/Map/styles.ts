@@ -39,6 +39,7 @@ export const LeafletMapContainer = styled.div`
     display: flex; 
     align-content: center;
     align-items: center;
+    justify-content: center;
     min-inline-size: auto;
 `;
 
@@ -95,4 +96,50 @@ export const MarkedPointsContainer = styled.div`
     align-items: center;
     justify-content: center;
     align-content: center;
+`;
+
+export const MarkedPoint = styled.div`
+    width: 35%;
+    min-width: 320px;
+    min-height: 10%;
+    height: 20%;
+    padding: 30px;
+    border-radius: 10px 0 10px 0;
+    background-color: coral;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-items: center;
+
+    #title {
+        padding: 3px;
+        display: flex;
+        width: 100%;
+        border: 1 solid;
+        font-family: Roboto, Arial, Helvetica, sans-serif;
+    }
+
+    #latlng {
+        margin: 5px;
+
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        font-family: Roboto, Arial, Helvetica, sans-serif;    
+    }
+
+    button {
+        margin-top: 10px;
+        margin-bottom: 5px;  
+        border: 0;
+        height: 0px;
+        
+        img {
+            flex-direction: row;
+            justify-content: right;
+            align-items: flex-start;
+        }
+    } 
 `;

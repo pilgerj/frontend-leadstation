@@ -20,18 +20,20 @@ export const MainDiv = styled.div`
         h1 {
             padding: 5px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             font-family: Roboto, Arial, Helvetica, sans-serif;
         }
     }
 
     .leaflet-container {
-        width: 100%;
+        width: 90%;
         height: 350px;
         border-radius: 20px 0 15px 0;
         
+        display:flex;
         align-content: center;
         align-items: center;
+        justify-content: center;
     }
 `;
