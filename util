@@ -1,2 +1,6 @@
 yarn add axios
 >> consumir backend
+
+yarn add react-icons
+
+yarn add yup

@@ -14,13 +14,13 @@ export const MainDiv = styled.div`
 
         background-color: coral;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
 
         h1 {
             padding: 5px;
             display: flex;
-            justify-content: flex-start;
+            justify-content: left;
             align-items: center;
             font-family: Roboto, Arial, Helvetica, sans-serif;
         }

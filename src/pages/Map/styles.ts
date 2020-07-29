@@ -11,17 +11,16 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
 
-    h1 {
+    h1, h2, h3, h4 {
         display: flex;
-    flex-direction: column;
-  
-    align-content: center;
-    align-items: center;
-    margin-bottom: 5px;
-    margin-top: 10px;
-
-    font-family: Roboto, Arial, Helvetica, sans-serif;
+        flex-direction: column;
     
+        align-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+        margin-top: 10px;
+
+        font-family: Roboto, Arial, Helvetica, sans-serif;
     }
 
     
@@ -43,48 +42,36 @@ export const LeafletMapContainer = styled.div`
     min-inline-size: auto;
 `;
 
-export const FormContainer = styled.form`
+export const FormContainer = styled.div`
     background: #fff;
     
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    legend {
-        width: 100%;
-        margin-bottom: 20px;
+    justify-content: center;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    form {
+        margin: 20px 0;
+        width: 340px;
+        text-align: center;
+
+        h1 {
+            margin-bottom: 24px;
+        }
+
+        a {
+            color: #f4ede8;
+            display: block;
+            margin-top: 24px;
+            text-decoration: none;
+
+            transition: color 0.2s;
+
+            &:hover {
+                color: '#f4ede8';
+            }
+        }
     }
-
-    input {
-        padding: 20px;
-        width: 35%;
-        min-width: 300px;
-
-        font-size: 20px;
-        margin-bottom: 5px;
-
-        border-radius: 10px;
-
-        align-items: center;
-        justify-content: space-between;
-        display: flex;
-    }
-
-    button {
-        width: 50%;
-        padding: 20px;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        width: 35%;
-        min-width: 300px;
-
-        border-radius: 10px;
-        border: 0;
-    } 
 `;
 
 export const MarkedPointsContainer = styled.div`
@@ -102,36 +89,36 @@ export const MarkedPoint = styled.div`
     width: 35%;
     min-width: 320px;
     min-height: 10%;
-    height: 20%;
+    
     padding: 30px;
     border-radius: 10px 0 10px 0;
     background-color: coral;
-
+    
     display: flex;
     flex-direction: column;
     justify-content: right;
     align-items: center;
 
-    #title {
-        padding: 3px;
+    .title {
+        height: 20px;
+        padding: 20px;
         display: flex;
         width: 100%;
         border: 1 solid;
-        font-family: Roboto, Arial, Helvetica, sans-serif;
     }
 
-    #latlng {
+    .latlng {
         margin: 5px;
 
         display: flex;
         align-items: center;
         align-content: center;
         justify-content: space-between;
-        font-family: Roboto, Arial, Helvetica, sans-serif;    
+           
     }
 
     button {
-        margin-top: 10px;
+        margin-top: 15px;
         margin-bottom: 5px;  
         border: 0;
         height: 0px;
@@ -140,6 +127,13 @@ export const MarkedPoint = styled.div`
             flex-direction: row;
             justify-content: right;
             align-items: flex-start;
+            border-radius: 5px;
+
+            transition: background 0.3s;
+
+            &:hover{
+                background: red;       
+            }
         }
     } 
 `;
